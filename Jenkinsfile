@@ -3,17 +3,25 @@ pipeline {
          stages {
              stage('First') {
                  steps {
-                     sh ' echo "Step One" '
+                      script {
+                          env.EXECUTE="True"
+                      }
                  }
              }
                stage('Second') {
+                   when {
+                      environment name: 'EXECUTE', value: "True"
+                    }
                  steps {
-                     sh ' echo "Step Two" '
+                     sh ' echo "Updating Second Stage" '
                  }
              }
               stage('Third') {
+                   when {
+                      environment name: 'EXECUTE', value: "True"
+                   }
                  steps {
-                     sh ' echo "Step Three" '
+                     sh ' echo "Updating Third Stage" '
                  }
              }
          }
